@@ -1,0 +1,8 @@
+# La base de datos en uso no se sube a GitHub: se sube una copia exportada (CSV).
+*.db
+__pycache__/
+.streamlit/secrets.toml
+
+# Archivos personales que no son parte del proyecto público
+.claude/
+leccion1.py

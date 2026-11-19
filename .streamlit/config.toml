@@ -1,0 +1,7 @@
+# Colores de English Lab: tonos de azul
+[theme]
+base = "light"
+primaryColor = "#1D4ED8"            # azul rey: botones principales
+backgroundColor = "#F5F9FF"         # blanco azulado: fondo
+secondaryBackgroundColor = "#DBEAFE" # azul hielo: tarjetas y campos
+textColor = "#0B2545"               # azul marino: textos
