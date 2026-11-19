@@ -61,8 +61,8 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - [ ] Hacer el examen EF SET y anotar nivel y puntaje.
 - [x] Crear la cuenta de GitHub con el correo personal (19 nov 2026): usuario **kategoba** — github.com/kategoba
 - [ ] Completar el perfil de GitHub y activar la verificación en dos pasos.
-- [ ] Pasar a Claude el correo privado de GitHub (noreply) y el nombre para configurar Git.
-- [ ] Subir English Lab a GitHub.
+- [x] Configurar Git con el nombre y el correo privado de GitHub.
+- [x] Subir English Lab a GitHub (19 nov 2026): github.com/kategoba/english-lab
 - [ ] Crear la base de datos gratuita en la nube (Neon).
 - [ ] Publicar la app en Streamlit Community Cloud con los secretos DATABASE_URL y APP_PASSWORD.
 - [x] Instalar Streamlit y pandas.
