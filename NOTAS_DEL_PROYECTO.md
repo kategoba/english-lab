@@ -32,7 +32,7 @@ App personal para aprender inglés que Kate construye, usa a diario desde el cel
 - Se sube: código, gráficos en el README, análisis, datos de ejemplo y una **copia exportada** de la base de datos real (sin datos personales aparte del nombre). Nunca el archivo de la base de datos en uso.
 
 ## Inglés
-- Nivel inicial estimado: A2. Pendiente medirlo con el examen gratuito EF SET y repetirlo cada 2 o 3 meses.
+- Nivel inicial medido (20 nov 2026): EF SET 30/100, A1 (lectura A2, escucha A1). Repetir cada 2 o 3 meses.
 - Meta final: una certificación de inglés publicada junto con el proyecto.
 
 ## LinkedIn
@@ -59,7 +59,7 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 4. Alertas por Telegram.
 
 ## Pendientes
-- [ ] Hacer el examen EF SET y anotar nivel y puntaje (programado para el 20 nov 2026).
+- [x] Examen EF SET (20 nov 2026): **30/100, A1**. Lectura 32 (A2), escucha 27 (A1). Certificado: cert.efset.org/es/3E6oYn. Datos en `resultados/ef_set.csv`. Repetir en febrero de 2027.
 - [x] Crear la cuenta de GitHub con el correo personal (19 nov 2026): usuario **kategoba** — github.com/kategoba
 - [ ] Completar el perfil de GitHub y activar la verificación en dos pasos.
 - [x] Configurar Git con el nombre y el correo privado de GitHub.

@@ -38,7 +38,15 @@ That is the training data for the prediction model.
 
 ## Results
 
-*Coming soon — real data only.* My starting level will be measured with the EF SET test.
+Real data only. I measure my level with the free [EF SET](https://www.efset.org/) test every 2–3 months.
+
+| Date | EF SET score | Level | Reading | Listening | Certificate |
+|---|---|---|---|---|---|
+| Nov 20, 2026 — **starting point** | 30/100 | A1 | 32 (A2) | 27 (A1) | [cert.efset.org/es/3E6oYn](https://cert.efset.org/es/3E6oYn) |
+
+Listening is my weakest skill, so the next features of English Lab focus on audio: dictation and pronunciation.
+
+Raw data: [`resultados/ef_set.csv`](resultados/ef_set.csv)
 
 ## Tech
 
