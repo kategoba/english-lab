@@ -12,7 +12,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
-from sqlalchemy import Column, Float, ForeignKey, Integer, MetaData, Table, Text, create_engine, text
+from sqlalchemy import Column, Float, ForeignKey, Integer, MetaData, Table, Text, create_engine, inspect, text
 
 import logica
 
@@ -58,9 +58,16 @@ repasos = Table(
     Column("tipo_ejercicio", Text, nullable=False),
     Column("dias_desde_ultimo_repaso", Integer),
     Column("nivel_antes", Integer, nullable=False),
+    Column("puntaje", Float),  # en el dictado: qué parte de las palabras acertaste (0 a 1)
 )
 
 tablas.create_all(motor)  # crea las tablas solo si todavía no existen
+
+# Migración: si la tabla de repasos se creó antes de existir el dictado, le agregamos
+# la columna "puntaje" sin tocar los datos que ya tiene.
+if "puntaje" not in {columna["name"] for columna in inspect(motor).get_columns("repasos")}:
+    with motor.begin() as con:
+        con.execute(text("ALTER TABLE repasos ADD COLUMN puntaje FLOAT"))
 
 
 def ahora() -> datetime:
@@ -131,6 +138,43 @@ def registrar_repaso(palabra_id: int, recordada: bool, tiempo_respuesta_seg: flo
         )
 
 
+def palabra_al_azar():
+    """Una palabra cualquiera de tu laboratorio, para el dictado. None si no hay palabras."""
+    with motor.begin() as con:
+        return con.execute(text("SELECT * FROM palabras ORDER BY random() LIMIT 1")).mappings().first()
+
+
+def palabra_por_id(palabra_id: int):
+    with motor.begin() as con:
+        return con.execute(
+            text("SELECT * FROM palabras WHERE id = :id"), {"id": palabra_id}
+        ).mappings().first()
+
+
+def registrar_dictado(palabra_id: int, puntaje: float, tiempo_respuesta_seg: float):
+    """Guarda el resultado de un dictado.
+
+    El dictado mide tu oído, no tu memoria del significado,
+    así que no cambia el nivel ni la fecha de repaso de la palabra.
+    """
+    with motor.begin() as con:
+        palabra = con.execute(
+            text("SELECT * FROM palabras WHERE id = :id"), {"id": palabra_id}
+        ).mappings().one()
+        momento = ahora()
+        referencia = date.fromisoformat((palabra["ultimo_repaso"] or palabra["creada"])[:10])
+        con.execute(
+            text("""INSERT INTO repasos (palabra_id, fecha_hora, recordada, tiempo_respuesta_seg,
+                                         tipo_ejercicio, dias_desde_ultimo_repaso, nivel_antes, puntaje)
+                    VALUES (:palabra_id, :fecha_hora, :recordada, :tiempo,
+                            'dictado', :dias, :nivel_antes, :puntaje)"""),
+            {"palabra_id": palabra_id, "fecha_hora": momento.isoformat(timespec="seconds"),
+             "recordada": int(puntaje >= logica.DICTADO_APROBADO), "tiempo": round(tiempo_respuesta_seg, 1),
+             "dias": (momento.date() - referencia).days, "nivel_antes": palabra["nivel"],
+             "puntaje": round(puntaje, 3)},
+        )
+
+
 def tabla_palabras() -> pd.DataFrame:
     with motor.begin() as con:
         return pd.read_sql_query(text("SELECT * FROM palabras ORDER BY creada DESC"), con)
@@ -141,7 +185,7 @@ def tabla_repasos() -> pd.DataFrame:
     with motor.begin() as con:
         return pd.read_sql_query(
             text("""SELECT r.id, r.fecha_hora, p.palabra, p.significado, r.tipo_ejercicio, r.recordada,
-                           r.tiempo_respuesta_seg, r.dias_desde_ultimo_repaso, r.nivel_antes
+                           r.tiempo_respuesta_seg, r.dias_desde_ultimo_repaso, r.nivel_antes, r.puntaje
                     FROM repasos r JOIN palabras p ON p.id = r.palabra_id
                     ORDER BY r.fecha_hora"""),
             con,

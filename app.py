@@ -11,7 +11,6 @@ import time
 import altair as alt
 import pandas as pd
 import streamlit as st
-import streamlit.components.v1 as components
 
 import datos
 import logica
@@ -23,10 +22,12 @@ st.set_page_config(page_title="English Lab", page_icon="💙", layout="centered"
 
 def boton_escuchar(texto: str):
     """Botones para oír un texto en inglés con la voz del navegador (gratis, funciona en PC y celular)."""
-    texto_js = json.dumps(texto)  # convierte el texto a un formato seguro para JavaScript
-    components.html(
+    # Convierte el texto a un formato seguro para JavaScript (y evita que "</" cierre el script).
+    texto_js = json.dumps(texto).replace("</", "<\\/")
+    st.iframe(
         f"""
         <style>
+          body {{ margin: 4px 0; overflow: hidden; }}
           button {{ font-size: 15px; padding: 8px 14px; margin-right: 6px; border-radius: 8px;
                    border: 1px solid #93C5FD; background: #DBEAFE; color: #0B2545; cursor: pointer; }}
         </style>
@@ -95,6 +96,60 @@ def responder(palabra_id: int, recordada: bool):
     st.rerun()
 
 
+# ---------- Pantalla: dictado (entrenar el oído) ----------
+def pantalla_dictado():
+    # Escogemos una frase y la mantenemos hasta que pidas otra.
+    if "dictado_id" not in st.session_state:
+        palabra = datos.palabra_al_azar()
+        if palabra is None:
+            st.info("Agrega palabras en **➕ Agregar** para practicar el dictado.")
+            return
+        st.session_state.dictado_id = palabra["id"]
+        st.session_state.dictado_inicio = time.time()
+        st.session_state.dictado_resultado = None
+
+    palabra = datos.palabra_por_id(st.session_state.dictado_id)
+    frase = palabra["ejemplo"] or palabra["palabra"]  # si tiene ejemplo, dictamos la frase completa
+
+    st.write("Escucha y escribe lo que oyes. Puedes repetir el audio las veces que quieras.")
+    with st.container(border=True):
+        boton_escuchar(frase)
+
+    if st.session_state.dictado_resultado is None:
+        with st.form("dictado"):
+            escrito = st.text_input("Lo que escuché", placeholder="Escribe aquí en inglés")
+            revisar = st.form_submit_button("✔️ Revisar", type="primary", width="stretch")
+        if revisar:
+            if not escrito.strip():
+                st.error("Escribe lo que escuchaste.")
+                return
+            puntaje, detalle = logica.comparar_dictado(frase, escrito)
+            tiempo = time.time() - st.session_state.dictado_inicio
+            datos.registrar_dictado(palabra["id"], puntaje, tiempo)
+            st.session_state.dictado_resultado = (puntaje, detalle, escrito)
+            st.rerun()
+        return
+
+    puntaje, detalle, escrito = st.session_state.dictado_resultado
+    acertadas = sum(1 for _, bien in detalle if bien)
+    if puntaje == 1:
+        st.success(f"🎯 ¡Perfecto! Acertaste las {len(detalle)} palabras.")
+    elif puntaje >= logica.DICTADO_APROBADO:
+        st.success(f"👏 Muy bien: {acertadas} de {len(detalle)} palabras ({puntaje:.0%}).")
+    else:
+        st.warning(f"💪 {acertadas} de {len(detalle)} palabras ({puntaje:.0%}). ¡Escúchala otra vez!")
+
+    # La frase original: en rojo las palabras que se te escaparon.
+    marcada = " ".join(f"**{p}**" if bien else f":red[**{p}**]" for p, bien in detalle)
+    st.markdown(f"**La frase era:** {marcada}")
+    st.markdown(f"**Tú escribiste:** {escrito}")
+    st.caption(f"Significado: {palabra['significado']}")
+
+    if st.button("➡️ Otra frase", type="primary", width="stretch"):
+        del st.session_state["dictado_id"]
+        st.rerun()
+
+
 # ---------- Pantalla 2: agregar una palabra ----------
 def pantalla_agregar():
     st.write("Anota aquí lo nuevo que escuches en tus audios.")
@@ -140,12 +195,16 @@ def pantalla_progreso():
 
     repasos["dia"] = pd.to_datetime(repasos["fecha_hora"].str[:10])
     dias_con_estudio = set(repasos["dia"].dt.date)
+    # Separamos los ejercicios: la memoria (repasar) y el oído (dictado) se miden distinto.
+    memoria = repasos[repasos["tipo_ejercicio"] == "repaso"]
+    dictados = repasos[repasos["tipo_ejercicio"] == "dictado"]
 
     # Contenedor horizontal: en el celular las métricas quedan de a dos por fila.
     with st.container(horizontal=True):
         st.metric("📚 Guardadas", len(palabras), border=True)
         st.metric("🧠 Aprendidas", int((palabras["nivel"] >= logica.NIVEL_APRENDIDA).sum()), border=True)
-        st.metric("✅ Aciertos", f"{repasos['recordada'].mean():.0%}", border=True)
+        st.metric("✅ Memoria", f"{memoria['recordada'].mean():.0%}" if len(memoria) else "—", border=True)
+        st.metric("🎧 Dictado", f"{dictados['puntaje'].mean():.0%}" if len(dictados) else "—", border=True)
         st.metric("🔥 Días seguidos", logica.calcular_racha(dias_con_estudio, datos.hoy()), border=True)
 
     st.subheader("Repasos por día")
@@ -211,6 +270,7 @@ if not pedir_clave():
 
 secciones = {
     "🧠 Repasar": pantalla_repasar,
+    "🎧 Dictado": pantalla_dictado,
     "➕ Agregar": pantalla_agregar,
     "📚 Palabras": pantalla_mis_palabras,
     "📊 Progreso": pantalla_progreso,

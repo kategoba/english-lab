@@ -51,9 +51,10 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - **19 nov 2026 — Versión 1 en el PC:** agregar palabras, repasar con repetición espaciada, escuchar en voz normal y lenta, lista de palabras, progreso (guardadas, aprendidas, aciertos, días seguidos y gráfico) y exportar CSV. Probada en tamaño celular.
 - **19 nov 2026 — Preparada para internet:** `datos.py` funciona con SQLite en el PC y con PostgreSQL en la nube (usando SQLAlchemy). La app pide clave cuando está en internet. Git instalado.
 - **19 nov 2026 — ¡En internet!** Código en GitHub, base de datos en Neon y app publicada en Streamlit Community Cloud.
+- **20 nov 2026 — Dictado:** nueva sección 🎧 Dictado (escuchar sin ver la frase, escribirla y ver en rojo las palabras que faltaron). Cada dictado se guarda con su puntaje; no cambia la fecha de repaso de la palabra. Progreso separa ✅ Memoria y 🎧 Dictado. Se agregó la columna `puntaje` a la tabla de repasos con una migración que no borra datos.
 
 ## Siguientes pasos
-1. Dictado (escuchar y escribir).
+1. ~~Dictado (escuchar y escribir).~~ ✅ 20 nov 2026
 2. Pronunciación (hablar con el micrófono).
 3. Publicarla en internet con base de datos en la nube y clave, para usarla desde el celular.
 4. Alertas por Telegram.

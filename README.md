@@ -21,6 +21,7 @@ I practice every day on my phone, the app records every review, and I analyze th
 - **Save words** that I hear in English listening videos, with meaning and example.
 - **Spaced repetition:** each word comes back after 1, 3, 7, 14, 30 or 60 days, depending on whether I remember it.
 - **Listen:** hear each word and example in normal and slow speed (browser voice).
+- **Dictation:** the app reads a sentence without showing it; I type what I hear and it marks the words I missed.
 - **Progress dashboard:** saved words, learned words, accuracy and study streak.
 - **Data export:** a CSV with every review, for analysis.
 
@@ -30,7 +31,7 @@ That is the training data for the prediction model.
 ## Roadmap
 
 1. ✅ Base app: words, spaced repetition, audio and progress.
-2. ⬜ Listening (dictation) and speaking (pronunciation) practice.
+2. 🟡 Listening (dictation ✅) and speaking (pronunciation ⬜) practice.
 3. ✅ Online version for daily practice on my phone.
 4. ⬜ Daily Telegram alerts: morning *memory forecast* and evening *lab report*.
 5. ⬜ Analytics: consistency, most forgotten words, study time.
