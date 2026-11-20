@@ -50,6 +50,7 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 ## Bitácora
 - **19 nov 2026 — Versión 1 en el PC:** agregar palabras, repasar con repetición espaciada, escuchar en voz normal y lenta, lista de palabras, progreso (guardadas, aprendidas, aciertos, días seguidos y gráfico) y exportar CSV. Probada en tamaño celular.
 - **19 nov 2026 — Preparada para internet:** `datos.py` funciona con SQLite en el PC y con PostgreSQL en la nube (usando SQLAlchemy). La app pide clave cuando está en internet. Git instalado.
+- **19 nov 2026 — ¡En internet!** Código en GitHub, base de datos en Neon y app publicada en Streamlit Community Cloud.
 
 ## Siguientes pasos
 1. Dictado (escuchar y escribir).
@@ -63,7 +64,16 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - [ ] Completar el perfil de GitHub y activar la verificación en dos pasos.
 - [x] Configurar Git con el nombre y el correo privado de GitHub.
 - [x] Subir English Lab a GitHub (19 nov 2026): github.com/kategoba/english-lab
-- [ ] Crear la base de datos gratuita en la nube (Neon).
-- [ ] Publicar la app en Streamlit Community Cloud con los secretos DATABASE_URL y APP_PASSWORD.
+- [x] Crear la base de datos gratuita en la nube (Neon): proyecto english-lab, región AWS US East 2 (Ohio). Contraseña cambiada después de quedar expuesta.
+- [x] Publicar la app en Streamlit Community Cloud con los secretos DATABASE_URL y APP_PASSWORD (19 nov 2026).
+- [ ] Probar la app publicada: entrar con la clave, agregar una palabra, repasarla y ver el progreso (confirma la conexión con Neon).
+- [ ] Abrirla en el celular, agregarla a la pantalla de inicio y probar el audio.
+- [ ] Pasar a Claude el link de la app (.streamlit.app) para ponerlo en el README.
+- [ ] Cerrar el Bloc de notas sin guardar.
+- [ ] Activar la verificación en dos pasos en GitHub.
+
+## Pendientes fuera del proyecto
+- [ ] Ejercicio de la lección 1 de Python (tarifa por hora en dólares y pesos).
+- [ ] Enviar a sistemas el mensaje para reinstalar Survey123.
 - [x] Instalar Streamlit y pandas.
 - [x] Crear esta carpeta.
