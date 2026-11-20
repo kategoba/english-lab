@@ -20,6 +20,19 @@ import logica
 # En la nube, la dirección llega en la variable DATABASE_URL. Es un "secreto":
 # se configura en el servicio de publicación y nunca se sube a GitHub.
 # En el PC no existe esa variable, así que usamos el archivo english_lab.db.
+
+# Streamlit Community Cloud guarda las apps en /mount/src/. Así sabemos si estamos en internet.
+EN_LA_NUBE = Path(__file__).resolve().as_posix().startswith("/mount/src/") or bool(os.environ.get("ENGLISH_LAB_NUBE"))
+
+# En internet, un archivo local se borra cada vez que el servidor se reinicia (así se perdieron
+# las primeras palabras). Por eso, si en la nube falta DATABASE_URL, la app se detiene con un error
+# en vez de guardar en silencio en un lugar temporal.
+if EN_LA_NUBE and not os.environ.get("DATABASE_URL"):
+    raise RuntimeError(
+        "Falta el secreto DATABASE_URL. Agrégalo en Streamlit: Settings → Secrets. "
+        "Sin él, tus datos no se guardarían de forma permanente."
+    )
+
 ARCHIVO_LOCAL = Path(os.environ.get("ENGLISH_LAB_BD", Path(__file__).parent / "english_lab.db"))
 URL_BD = os.environ.get("DATABASE_URL") or f"sqlite:///{ARCHIVO_LOCAL}"
 # Le indicamos a SQLAlchemy que use psycopg, el conector de PostgreSQL que instalamos.
@@ -28,6 +41,9 @@ for prefijo in ("postgres://", "postgresql://"):
         URL_BD = "postgresql+psycopg://" + URL_BD[len(prefijo):]
 
 motor = create_engine(URL_BD, pool_pre_ping=True)  # pool_pre_ping: revisa que la conexión siga viva
+
+# Para mostrar en la app dónde quedan guardados tus datos.
+DONDE_SE_GUARDA = "🟢 En la nube (Neon)" if motor.dialect.name == "postgresql" else "💻 En este computador"
 
 # Usamos la hora de Colombia aunque la app corra en un servidor de otro país.
 ZONA_HORARIA = ZoneInfo("America/Bogota")

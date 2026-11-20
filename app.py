@@ -12,12 +12,27 @@ import altair as alt
 import pandas as pd
 import streamlit as st
 
-import datos
 import logica
 
 AZUL_MEDIO = "#3B82F6"
 
 st.set_page_config(page_title="English Lab", page_icon="💙", layout="centered")
+
+# Los secretos de Streamlit Cloud también llegan como variables de entorno.
+# Por si acaso, los copiamos nosotras mismas antes de abrir la base de datos.
+try:
+    for nombre in ("DATABASE_URL", "APP_PASSWORD"):
+        if nombre in st.secrets and not os.environ.get(nombre):
+            os.environ[nombre] = str(st.secrets[nombre])
+except Exception:
+    pass  # en el PC no hay archivo de secretos, y está bien
+
+try:
+    import datos
+except RuntimeError as error:  # en internet sin base de datos: mejor detenerse que perder datos
+    st.title("💙 English Lab")
+    st.error(f"⚠️ {error}")
+    st.stop()
 
 
 def boton_escuchar(texto: str):
@@ -230,6 +245,8 @@ def pantalla_progreso():
     )
     st.altair_chart(grafico, width="stretch")
 
+    st.caption(f"Tus datos se guardan: **{datos.DONDE_SE_GUARDA}**")
+
     st.subheader("Exportar mis datos")
     st.write("Copia de todos tus repasos para subir a GitHub. No incluye datos personales.")
     st.download_button(
@@ -248,6 +265,10 @@ def pedir_clave() -> bool:
     En el PC esa variable no existe, así que la app abre directo.
     """
     clave = os.environ.get("APP_PASSWORD")
+    if not clave and datos.EN_LA_NUBE:
+        # En internet, sin clave cualquiera con el link vería tus datos: no abrimos.
+        st.error("⚠️ Falta el secreto APP_PASSWORD. Agrégalo en Streamlit: Settings → Secrets.")
+        return False
     if not clave or st.session_state.get("autorizada"):
         return True
     with st.form("clave"):
