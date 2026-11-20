@@ -68,7 +68,8 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - [x] Publicar la app en Streamlit Community Cloud con los secretos DATABASE_URL y APP_PASSWORD (19 nov 2026).
 - [x] Probar la app publicada (19 nov 2026): primera palabra real "I want to see you", repasada y guardada en Neon. ¡Funciona!
 - [x] Abrirla en el celular (19 nov 2026): probada y funcionando.
-- [x] Link de la app en el README: https://hl67p8jyjexmyqeevtkztt.streamlit.app/
+- [x] Link de la app en el README: https://english-lab-kate.streamlit.app
+- [ ] Volver a agregar la app a la pantalla de inicio del celular con el link nuevo.
 - [ ] Cerrar el Bloc de notas sin guardar.
 - [ ] Activar la verificación en dos pasos en GitHub.
 

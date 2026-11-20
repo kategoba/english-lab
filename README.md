@@ -4,7 +4,7 @@
 
 > *"What gets measured, gets improved."*
 
-🌐 **Live app:** [hl67p8jyjexmyqeevtkztt.streamlit.app](https://hl67p8jyjexmyqeevtkztt.streamlit.app/) — password-protected, because it holds my real learning data.
+🌐 **Live app:** [english-lab-kate.streamlit.app](https://english-lab-kate.streamlit.app) — password-protected, because it holds my real learning data.
 
 English Lab is my personal app for learning English, built as a data science project.
 I am a data analyst on my way to data science, and I am using my own English learning as the case study:
