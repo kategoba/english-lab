@@ -10,6 +10,12 @@ English Lab is my personal app for learning English, built as a data science pro
 I am a data analyst on my way to data science, and I am using my own English learning as the case study:
 I practice every day on my phone, the app records every review, and I analyze the data to see — and later predict — how I learn.
 
+## On my phone
+
+<img src="imagenes/celular-v1.jpg" alt="English Lab running on my phone" width="300">
+
+*Version 1, November 19, 2026 — my daily practice happens here.*
+
 ## What it does (version 1)
 
 - **Save words** that I hear in English listening videos, with meaning and example.
