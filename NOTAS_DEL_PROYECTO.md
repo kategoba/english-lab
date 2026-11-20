@@ -66,7 +66,7 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - [x] Subir English Lab a GitHub (19 nov 2026): github.com/kategoba/english-lab
 - [x] Crear la base de datos gratuita en la nube (Neon): proyecto english-lab, región AWS US East 2 (Ohio). Contraseña cambiada después de quedar expuesta.
 - [x] Publicar la app en Streamlit Community Cloud con los secretos DATABASE_URL y APP_PASSWORD (19 nov 2026).
-- [ ] Probar la app publicada: entrar con la clave, agregar una palabra, repasarla y ver el progreso (confirma la conexión con Neon).
+- [x] Probar la app publicada (19 nov 2026): primera palabra real "I want to see you", repasada y guardada en Neon. ¡Funciona!
 - [ ] Abrirla en el celular, agregarla a la pantalla de inicio y probar el audio.
 - [ ] Pasar a Claude el link de la app (.streamlit.app) para ponerlo en el README.
 - [ ] Cerrar el Bloc de notas sin guardar.

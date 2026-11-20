@@ -119,7 +119,8 @@ def pantalla_mis_palabras():
     if palabras.empty:
         st.info("Todavía no has guardado palabras.")
         return
-    st.write(f"Tienes **{len(palabras)}** palabras en tu laboratorio.")
+    total = len(palabras)
+    st.write(f"Tienes **{total}** {'palabra' if total == 1 else 'palabras'} en tu laboratorio.")
     tabla = palabras[["palabra", "significado", "nivel", "proximo_repaso"]].rename(
         columns={"palabra": "Palabra", "significado": "Significado",
                  "nivel": "Nivel", "proximo_repaso": "Próximo repaso"}
