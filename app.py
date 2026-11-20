@@ -245,7 +245,9 @@ def pantalla_progreso():
     )
     st.altair_chart(grafico, width="stretch")
 
-    st.caption(f"Tus datos se guardan: **{datos.DONDE_SE_GUARDA}**")
+    # Lo calculamos aquí desde el motor de la base de datos, que existe en todas las versiones de datos.py.
+    en_neon = datos.motor.dialect.name == "postgresql"
+    st.caption(f"Tus datos se guardan: **{'🟢 En la nube (Neon)' if en_neon else '💻 En este computador'}**")
 
     st.subheader("Exportar mis datos")
     st.write("Copia de todos tus repasos para subir a GitHub. No incluye datos personales.")
@@ -265,7 +267,7 @@ def pedir_clave() -> bool:
     En el PC esa variable no existe, así que la app abre directo.
     """
     clave = os.environ.get("APP_PASSWORD")
-    if not clave and datos.EN_LA_NUBE:
+    if not clave and getattr(datos, "EN_LA_NUBE", True):
         # En internet, sin clave cualquiera con el link vería tus datos: no abrimos.
         st.error("⚠️ Falta el secreto APP_PASSWORD. Agrégalo en Streamlit: Settings → Secrets.")
         return False

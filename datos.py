@@ -42,9 +42,6 @@ for prefijo in ("postgres://", "postgresql://"):
 
 motor = create_engine(URL_BD, pool_pre_ping=True)  # pool_pre_ping: revisa que la conexión siga viva
 
-# Para mostrar en la app dónde quedan guardados tus datos.
-DONDE_SE_GUARDA = "🟢 En la nube (Neon)" if motor.dialect.name == "postgresql" else "💻 En este computador"
-
 # Usamos la hora de Colombia aunque la app corra en un servidor de otro país.
 ZONA_HORARIA = ZoneInfo("America/Bogota")
 
