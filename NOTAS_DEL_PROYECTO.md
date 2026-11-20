@@ -59,7 +59,7 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 4. Alertas por Telegram.
 
 ## Pendientes
-- [ ] Hacer el examen EF SET y anotar nivel y puntaje.
+- [ ] Hacer el examen EF SET y anotar nivel y puntaje (programado para el 20 nov 2026).
 - [x] Crear la cuenta de GitHub con el correo personal (19 nov 2026): usuario **kategoba** — github.com/kategoba
 - [ ] Completar el perfil de GitHub y activar la verificación en dos pasos.
 - [x] Configurar Git con el nombre y el correo privado de GitHub.
@@ -69,8 +69,8 @@ Inicio de la publicación: "Siempre digo que lo que no se mide no se puede contr
 - [x] Probar la app publicada (19 nov 2026): primera palabra real "I want to see you", repasada y guardada en Neon. ¡Funciona!
 - [x] Abrirla en el celular (19 nov 2026): probada y funcionando.
 - [x] Link de la app en el README: https://english-lab-kate.streamlit.app
-- [ ] Volver a agregar la app a la pantalla de inicio del celular con el link nuevo.
-- [ ] Cerrar el Bloc de notas sin guardar.
+- [x] Volver a agregar la app a la pantalla de inicio del celular con el link nuevo.
+- [x] Cerrar el Bloc de notas sin guardar.
 - [ ] Activar la verificación en dos pasos en GitHub.
 
 ## Pendientes fuera del proyecto
