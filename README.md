@@ -4,6 +4,8 @@
 
 > *"What gets measured, gets improved."*
 
+🌐 **Live app:** [hl67p8jyjexmyqeevtkztt.streamlit.app](https://hl67p8jyjexmyqeevtkztt.streamlit.app/) — password-protected, because it holds my real learning data.
+
 English Lab is my personal app for learning English, built as a data science project.
 I am a data analyst on my way to data science, and I am using my own English learning as the case study:
 I practice every day on my phone, the app records every review, and I analyze the data to see — and later predict — how I learn.
@@ -23,7 +25,7 @@ That is the training data for the prediction model.
 
 1. ✅ Base app: words, spaced repetition, audio and progress.
 2. ⬜ Listening (dictation) and speaking (pronunciation) practice.
-3. ⬜ Online version for daily practice on my phone.
+3. ✅ Online version for daily practice on my phone.
 4. ⬜ Daily Telegram alerts: morning *memory forecast* and evening *lab report*.
 5. ⬜ Analytics: consistency, most forgotten words, study time.
 6. ⬜ Machine learning: predict which words I am about to forget.
